@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -5,6 +6,8 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     public int playerScore = 0;
+    public TextMeshProUGUI playerScoreTextMeshPro;
+
     public static GameManager Instance
     {
         get
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int score) 
     { 
-        playerScore += score; 
+        playerScore += score;
+        playerScoreTextMeshPro.text = playerScore.ToString();
     }
 }

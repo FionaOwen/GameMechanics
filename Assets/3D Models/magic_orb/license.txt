@@ -1,0 +1,11 @@
+Model Information:
+* title:	Magic orb
+* source:	https://sketchfab.com/3d-models/magic-orb-348d3a01dd31484eb339a397b94e6d2b
+* author:	epma (https://sketchfab.com/free_bruh)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Magic orb" (https://sketchfab.com/3d-models/magic-orb-348d3a01dd31484eb339a397b94e6d2b) by epma (https://sketchfab.com/free_bruh) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)

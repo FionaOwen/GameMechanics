@@ -3,16 +3,28 @@ using UnityEngine;
 public class Orb : MonoBehaviour
 {
     public int basePointValue = 10; // Set the base point value for each orb.
-    public Transform snapPoint; // Reference to the snapping point on the panel.
+    public float timeToLive = 10f;   // Time in seconds before the orb automatically destroys itself.
 
     private bool isScaledDown = false;
     private bool isCaptured = false;
 
+    void Start()
+    {
+        // Automatically destroy the orb after a certain time.
+        Invoke("DestroySelf", timeToLive);
+    }
+
     void Update()
     {
-        if (isCaptured)
+        if (!isCaptured)
         {
-            // Implement any logic for the floating movement of the orb when it's captured.
+            // Implement floating movement for the orb when it's not captured.
+            // You may use Mathf.Sin or other methods to create a floating effect.
+            transform.position = new Vector3(
+                transform.position.x,
+                Mathf.Sin(Time.time) * 0.2f + 2f, // Adjust the floating height as needed.
+                transform.position.z
+            );
         }
     }
 
@@ -26,20 +38,8 @@ public class Orb : MonoBehaviour
     {
         if (!isCaptured)
         {
-            // Check if the orb is placed on the snapping point on the panel.
-            if (IsOnSnapPoint())
-            {
-                CaptureOrb();
-            }
+            CaptureOrb();
         }
-    }
-
-    private bool IsOnSnapPoint()
-    {
-        // Implement logic to check if the orb is on the snapping point.
-        // You might use Collider or distance checks, depending on your setup.
-        // Return true if on the snap point, false otherwise.
-        return true; // Placeholder, modify based on your actual implementation.
     }
 
     private void CaptureOrb()
@@ -50,10 +50,14 @@ public class Orb : MonoBehaviour
 
         // Other capture logic...
 
-        // Set the orb as captured to prevent further scoring.
-        isCaptured = true;
-        // Destroy the orb or deactivate it after capturing.
-        gameObject.SetActive(false);
+        // Destroy the orb after capturing.
+        Destroy(gameObject);
+    }
+
+    private void DestroySelf()
+    {
+        // Destroy the orb after the specified time.
+        Destroy(gameObject);
     }
 
     private int CalculateScore()

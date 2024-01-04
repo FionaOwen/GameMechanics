@@ -1,13 +1,15 @@
 using UnityEngine;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
     public float gameTime = 180f; // 3 minutes
+    public TextMeshProUGUI timeTextMeshPro;
 
     private void Update()
     {
         gameTime -= Time.deltaTime;
-
+        timeTextMeshPro.text = gameTime.ToString("0");
         if (gameTime <= 0)
         {
             EndGame();

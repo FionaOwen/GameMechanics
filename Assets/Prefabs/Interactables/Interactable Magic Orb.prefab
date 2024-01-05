@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePointValue: 5
   timeToLive: 10
+  floatingYValue: 2
 --- !u!1 &1298828777081111268
 GameObject:
   m_ObjectHideFlags: 0

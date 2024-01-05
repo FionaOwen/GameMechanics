@@ -4,12 +4,17 @@ public class Orb : MonoBehaviour
 {
     public int basePointValue = 10; // Set the base point value for each orb.
     public float timeToLive = 10f;   // Time in seconds before the orb automatically destroys itself.
+    public float floatingYValue;
 
     private bool isScaledDown = false;
     private bool isCaptured = false;
+    private float initialYPosition;
 
     void Start()
     {
+        // Store initial Y position.
+        initialYPosition = transform.position.y;
+
         // Automatically destroy the orb after a certain time.
         Invoke("DestroySelf", timeToLive);
     }
@@ -18,13 +23,17 @@ public class Orb : MonoBehaviour
     {
         if (!isCaptured)
         {
-            // Implement floating movement for the orb when it's not captured.
-            // You may use Mathf.Sin or other methods to create a floating effect.
-            transform.position = new Vector3(
-                transform.position.x,
-                Mathf.Sin(Time.time) * 0.2f + 2f, // Adjust the floating height as needed.
-                transform.position.z
-            );
+            // Implement floating movement for the orb when it's not captured.        
+            // Use the initial Y position as the base for the floating effect.
+            float floatingHeight = Mathf.Sin(Time.time) * 0.2f + 2f;         
+            transform.position = new Vector3(transform.position.x, initialYPosition + floatingHeight, transform.position.z);
+            
+            
+            //transform.position = new Vector3(
+            //    transform.position.x,
+            //    Mathf.Sin(Time.time) * 0.2f + floatingYValue, // Adjust the floating height as needed.
+            //    transform.position.z
+            //);
         }
     }
 

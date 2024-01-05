@@ -432,6 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePointValue: 10
   timeToLive: 10
+  floatingYValue: 3
 --- !u!1001 &3470861912065347012
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5179772543215705740}
   - component: {fileID: 5485088546289423155}
   m_Layer: 0
-  m_Name: Interactable Color Orb
+  m_Name: Interactable Color Orb Spy
   m_TagString: Orb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +280,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950621468952699155}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -552,7 +552,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 261a1cc3d88524043b9cab716906b670, type: 2}
+      objectReference: {fileID: 2100000, guid: cc73287d177a05148af10515cfe6a660, type: 2}
     - target: {fileID: 5855705289312669635, guid: e633e81eab3375a469010ad7c60e7a28,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -620,11 +620,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6310791818129456592, guid: e633e81eab3375a469010ad7c60e7a28,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2866714823321310889}
+      addedObject: {fileID: 4185005538522620425}
     - targetCorrespondingSourceObject: {fileID: 5214075516943129442, guid: e633e81eab3375a469010ad7c60e7a28,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5288122142147775167}
+      addedObject: {fileID: 5594380142417662504}
   m_SourcePrefab: {fileID: 100100000, guid: e633e81eab3375a469010ad7c60e7a28, type: 3}
 --- !u!1 &5012319593796848182 stripped
 GameObject:
@@ -632,7 +632,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 996219191495823700}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &5288122142147775167
+--- !u!64 &5594380142417662504
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -660,7 +660,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 996219191495823700}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2866714823321310889
+--- !u!64 &4185005538522620425
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -679,7 +679,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7227129179611170996, guid: 5ec7a6620176d09469a5cba4ba6cec06, type: 3}
 --- !u!4 &6670091615703572119 stripped

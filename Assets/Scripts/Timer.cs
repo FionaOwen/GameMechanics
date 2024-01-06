@@ -22,6 +22,7 @@ public class Timer : MonoBehaviour
     {
         // Implement the logic for ending the game.
         // You may display the player's final score, show a game-over screen, etc.
+        gameTime = 0;
         objectsToActivateOnEnd[0].SetActive(false);
 
 

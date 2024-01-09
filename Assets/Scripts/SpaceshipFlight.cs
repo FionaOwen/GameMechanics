@@ -20,11 +20,11 @@ public class SpaceshipFlight : MonoBehaviour
     void Start()
     {
         //spaceshipTransform = transform.Find("Spaceship"); // Adjust the name accordingly.
-        xrGrabInteractable = GetComponent<XRGrabInteractable>();
+        //xrGrabInteractable = GetComponent<XRGrabInteractable>();
         //xrRig = FindObjectOfType<XRRig>(); // Assuming there's only one XR Rig in the scene.
 
         // Set the spaceship as kinematic initially to prevent physics interference.
-        xrGrabInteractable.GetComponent<Rigidbody>().isKinematic = true;
+        //xrGrabInteractable.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     void Update()

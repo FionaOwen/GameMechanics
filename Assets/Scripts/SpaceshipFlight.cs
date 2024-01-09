@@ -17,15 +17,8 @@ public class SpaceshipFlight : MonoBehaviour
 
     private int currentWaypointIndex = 0; // Index of the current waypoint.
 
-    void Start()
-    {
-        //spaceshipTransform = transform.Find("Spaceship"); // Adjust the name accordingly.
-        //xrGrabInteractable = GetComponent<XRGrabInteractable>();
-        //xrRig = FindObjectOfType<XRRig>(); // Assuming there's only one XR Rig in the scene.
+    public GameObject ShipFrontCollider;
 
-        // Set the spaceship as kinematic initially to prevent physics interference.
-        //xrGrabInteractable.GetComponent<Rigidbody>().isKinematic = true;
-    }
 
     void Update()
     {
@@ -37,6 +30,7 @@ public class SpaceshipFlight : MonoBehaviour
         {
             // If waypoints are done, land on the station.
             LandOnStation();
+            ShipFrontCollider.SetActive(false);
         }
 
         // Move the XR Rig along with the spaceship.
@@ -64,6 +58,7 @@ public class SpaceshipFlight : MonoBehaviour
         }
     }
 
+    public float landingThreshold; // Adjust this value based on your preference.
     void LandOnStation()
     {
         // Calculate the direction to the landing station.
@@ -75,13 +70,20 @@ public class SpaceshipFlight : MonoBehaviour
         // Smoothly rotate the spaceship towards the landing station.
         Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
         spaceshipTransform.rotation = Quaternion.Slerp(spaceshipTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        Quaternion targetRotationX = Quaternion.LookRotation(direction, Vector3.right);
+        spaceshipTransform.rotation = Quaternion.Slerp(spaceshipTransform.rotation, targetRotationX, rotationSpeed * Time.deltaTime);
+        //spaceshipTransform.rotation = Quaternion.LookRotation(direction, Vector3.up);
 
-        // Check if the spaceship has reached the landing station.
+        // Check if the spaceship has reached the landing station within a threshold.
         float distanceToStation = Vector3.Distance(spaceshipTransform.position, landingStation.position);
-        if (distanceToStation < 0.1f)
+
+       
+        if (distanceToStation < landingThreshold)
         {
             // Landing completed. Optionally, you can perform actions or transition to a new scene.
             Debug.Log("Spaceship has landed on the station!");
+            //this.enabled = false;
+            
         }
     }
 

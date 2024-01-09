@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Orb
   - Spaceship
+  - GoodOrb
+  - NegativeOrb1
+  - NegativeOrb2
   layers:
   - Default
   - TransparentFX

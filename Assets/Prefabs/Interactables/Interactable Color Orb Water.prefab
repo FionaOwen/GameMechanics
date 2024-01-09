@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5179772543215705740}
   - component: {fileID: 5485088546289423155}
   m_Layer: 0
-  m_Name: Interactable Color Orb
+  m_Name: Interactable Color Orb Water
   m_TagString: Orb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

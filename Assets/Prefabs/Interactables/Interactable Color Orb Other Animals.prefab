@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5179772543215705740}
   - component: {fileID: 5485088546289423155}
   m_Layer: 0
-  m_Name: Interactable Color Orb Spy
+  m_Name: Interactable Color Orb Other Animals
   m_TagString: Orb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,7 +552,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cc73287d177a05148af10515cfe6a660, type: 2}
+      objectReference: {fileID: 2100000, guid: 1f07fa3ff0295714fb1ebd80b866ac38, type: 2}
     - target: {fileID: 5855705289312669635, guid: e633e81eab3375a469010ad7c60e7a28,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -617,7 +617,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 737ec8e8cd695434bb305b8e40347dca, type: 2}
+      objectReference: {fileID: 2100000, guid: 2ded7d7851f7cd241992ebc967423266, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

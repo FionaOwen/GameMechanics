@@ -43,11 +43,13 @@ public class GameManager : MonoBehaviour
     { 
         playerScore += score;
         playerScoreTextMeshPro.text = playerScore.ToString();
+        Debug.Log(playerScore);
     }
 
     public void ResetScore()
     {
         playerScore = 0;
         playerScoreTextMeshPro.text = playerScore.ToString();
+        Debug.Log("PlayerScore Zeeerooooo!!!!!");
     }
 }

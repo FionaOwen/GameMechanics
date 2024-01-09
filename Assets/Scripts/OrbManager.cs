@@ -47,7 +47,7 @@ public class OrbManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SwitchOrbType", 0.1f, 0.4f);
+        InvokeRepeating("SwitchOrbType", 0.1f, 0.5f);
     }
 
 
@@ -76,19 +76,19 @@ public class OrbManager : MonoBehaviour
     {
         if (CompareTag("GoodOrb"))
         {
-
+            Debug.Log("Caught Negative Good Orb");
             return 1; // Good Orb
 
         }
         else if (CompareTag("NegativeOrb1"))
         {
-
+            Debug.Log("Caught Negative Orb 01");
             return 2; // Negative Orb 1
 
         }
         else if (CompareTag("NegativeOrb2"))
         {
-
+            Debug.Log("Caught Negative Orb 01");
             return 3; // Negative Orb 2
 
         }
@@ -134,12 +134,13 @@ public class OrbManager : MonoBehaviour
 
     public IEnumerator SwithTheOrbType()
     {
+        float waitingTime = UnityEngine.Random.Range(0f, 0.1f);
         DisableCurrentOrb();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(waitingTime);
         MoveToNextOrb();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(waitingTime);
         EnableCurrentOrb();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(waitingTime);
         Debug.Log("Inside coroutine");
     }
     void EnableCurrentOrb()
@@ -159,4 +160,9 @@ public class OrbManager : MonoBehaviour
         currentActiveOrbIndex = (currentActiveOrbIndex + 1) % childOrbs.Length;
     }
 
+    public void DestroySelf()
+    {
+        // Destroy the orb after the specified time.
+        Destroy(gameObject);
+    }
 }

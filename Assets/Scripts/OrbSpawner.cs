@@ -4,15 +4,15 @@ public class OrbSpawner : MonoBehaviour
 {
     public GameObject[] orbPrefabs; // Array of different orb prefabs to spawn.
     public Transform[] spawnPoints;  // Array of spawn points where orbs will be spawned.
-    public float spawnInterval = 5f; // Time interval between orb spawns.
-    public float orbLifetime = 10f;  // Time in seconds before the spawned orbs automatically destroy.
-    public int maxOrbsPerSpawn = 2;   // Maximum number of orbs to spawn in a single convergence event.
+    public float spawnInterval; // Time interval between orb spawns.
+    public float orbLifetime;  // Time in seconds before the spawned orbs automatically destroy.
+    public int maxOrbsPerSpawn;   // Maximum number of orbs to spawn in a single convergence event.
 
     private int orbsSpawned = 0;
 
     void Start()
     {
-        InvokeRepeating("SpawnOrbs", 0f, spawnInterval);
+        InvokeRepeating("SpawnOrbs", 0.1f, spawnInterval);
     }
 
     void SpawnOrbs()

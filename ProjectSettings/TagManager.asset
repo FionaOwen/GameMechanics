@@ -11,6 +11,7 @@ TagManager:
   - NegativeOrb2
   - SpaceAircraft
   - AlienCreature
+  - WaterSplash
   layers:
   - Default
   - TransparentFX

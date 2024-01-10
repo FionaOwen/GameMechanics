@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnAlienCreature : MonoBehaviour
 {
-    public GameObject firstObject; // Assign in the Inspector
-    public GameObject secondObject; // Assign in the Inspector
+    public GameObject alienCreaturePrefab; // Assign in the Inspector
+    public GameObject waterSplashPrefab; // Assign in the Inspector
     public float delayInSeconds = 2f;
 
     public MeshRenderer waterRenderer;
@@ -14,8 +13,7 @@ public class SpawnAlienCreature : MonoBehaviour
     public OrbManager orbManagerToDisable;
     public Rigidbody orbManagerRigidbody;
 
-    public bool hasCollided = false;
-
+    private bool hasCollided = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -26,21 +24,48 @@ public class SpawnAlienCreature : MonoBehaviour
             spyWaterCube.SetActive(false);
             orbManagerRigidbody.isKinematic = true;
             orbManagerToDisable.enabled = false;
-            //waterRenderer.enabled = false;
-            // Enable the first GameObject
-            firstObject.SetActive(true);
+
+            // Get the position of the triggering object
+            Vector3 spawnPosition = transform.position;
+
+            // Instantiate the water splash effect at the same position
+            Instantiate(waterSplashPrefab, spawnPosition, Quaternion.identity);
+
+            // Instantiate the alien creature at the same position
+//            Instantiate(alienCreaturePrefab, spawnPosition, Quaternion.identity);
+            StartCoroutine(EnableAlienCreatureWithDelay());
+
+            // Disable the water renderer if needed
+            // waterRenderer.enabled = false;
+
             hasCollided = true;
 
-            // Start a coroutine to enable the second GameObject after a delay
-            StartCoroutine(EnableSecondObjectAfterDelay());
+            // Start a coroutine to disable the spawned objects after a delay
+            //StartCoroutine(DisableSpawnedObjectsAfterDelay());
+
         }
     }
-    private IEnumerator EnableSecondObjectAfterDelay()
+    private IEnumerator EnableAlienCreatureWithDelay()
+    {
+        Vector3 spawnPosition = transform.position;
+
+        yield return new WaitForSeconds(0.2f);
+        Instantiate(alienCreaturePrefab, spawnPosition, Quaternion.identity);
+
+    }
+    private IEnumerator DisableSpawnedObjectsAfterDelay()
     {
         yield return new WaitForSeconds(delayInSeconds);
-        firstObject.SetActive(false);
 
-        // Enable the second GameObject after the specified delay
-        secondObject.SetActive(true);
+        // Destroy the spawned water splash effect
+        Destroy(GameObject.FindGameObjectWithTag("WaterSplash"));
+
+        // Disable the second GameObject (alien creature) after the specified delay
+        // You may need to modify this based on your specific alien creature logic
+        GameObject alienCreature = GameObject.FindGameObjectWithTag("AlienCreature");
+        if (alienCreature != null)
+        {
+            alienCreature.SetActive(false);
+        }
     }
 }

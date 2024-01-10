@@ -7,7 +7,7 @@ public class MoveAndAnimate : MonoBehaviour
     public float stoppingDistance; // Distance at which the animation should play
 
     private Transform target;
-    private Animator animator;
+    public Animator animator;
     private bool hasReachedTarget = false;
 
     private void Start()

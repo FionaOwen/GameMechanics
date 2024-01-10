@@ -9,6 +9,8 @@ TagManager:
   - GoodOrb
   - NegativeOrb1
   - NegativeOrb2
+  - SpaceAircraft
+  - AlienCreature
   layers:
   - Default
   - TransparentFX

@@ -10,8 +10,7 @@ public class SpaceshipFlight : MonoBehaviour
 
     [SerializeField]
     private Transform spaceshipTransform; // Reference to the spaceship's transform.
-    [SerializeField]
-    private XRGrabInteractable xrGrabInteractable; // Reference to the XR Grab Interactable component.
+
     [SerializeField]
     private GameObject xrRig; // Reference to the XR Rig component.
 
@@ -62,20 +61,20 @@ public class SpaceshipFlight : MonoBehaviour
     void LandOnStation()
     {
         // Calculate the direction to the landing station.
-        Vector3 direction = landingStation.position - spaceshipTransform.position;
+        Vector3 direction = landingStation.localPosition - spaceshipTransform.localPosition;
 
         // Move the spaceship towards the landing station.
         spaceshipTransform.position += direction.normalized * movementSpeed * Time.deltaTime;
 
         // Smoothly rotate the spaceship towards the landing station.
-        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        spaceshipTransform.rotation = Quaternion.Slerp(spaceshipTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        Quaternion targetRotationX = Quaternion.LookRotation(direction, Vector3.right);
-        spaceshipTransform.rotation = Quaternion.Slerp(spaceshipTransform.rotation, targetRotationX, rotationSpeed * Time.deltaTime);
-        //spaceshipTransform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        //Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+        //spaceshipTransform.rotation = Quaternion.Slerp(spaceshipTransform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+        spaceshipTransform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        
+       
 
         // Check if the spaceship has reached the landing station within a threshold.
-        float distanceToStation = Vector3.Distance(spaceshipTransform.position, landingStation.position);
+        float distanceToStation = Vector3.Distance(spaceshipTransform.localPosition, landingStation.localPosition);
 
        
         if (distanceToStation < landingThreshold)

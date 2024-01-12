@@ -5,6 +5,8 @@ public class MoveAndAnimate : MonoBehaviour
     public string targetTag ; // Tag of the GameObject to move towards
     public float movementSpeed; // Speed at which the GameObject moves
     public float stoppingDistance; // Distance at which the animation should play
+    public int creatureKillScore;
+    public int creatureAttackScore;
 
     private Transform target;
     public Animator animator;
@@ -24,9 +26,6 @@ public class MoveAndAnimate : MonoBehaviour
         {
             Debug.LogError("Target GameObject with tag '" + targetTag + "' not found.");
         }
-
-        // Get the Animator component attached to this GameObject
-        animator = GetComponent<Animator>();
     }
 
     private void Update()

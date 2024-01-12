@@ -9,9 +9,11 @@ public class SpawnAlienCreature : MonoBehaviour
 
     public MeshRenderer waterRenderer;
     public GameObject spyWaterCube;
+    public GameObject orbManagerParent;
     public Animator waterAnimator;
-    public OrbManager orbManagerToDisable;
+    
     public Rigidbody orbManagerRigidbody;
+    public Collider waterCollider;
 
     private bool hasCollided = false;
 
@@ -20,10 +22,6 @@ public class SpawnAlienCreature : MonoBehaviour
         // Check if the collision involves the specified GameObject
         if (other.gameObject.tag == "SpaceAircraft" && !hasCollided)
         {
-            waterAnimator.enabled = false;
-            spyWaterCube.SetActive(false);
-            orbManagerRigidbody.isKinematic = true;
-            orbManagerToDisable.enabled = false;
 
             // Get the position of the triggering object
             Vector3 spawnPosition = transform.position;
@@ -32,8 +30,8 @@ public class SpawnAlienCreature : MonoBehaviour
             Instantiate(waterSplashPrefab, spawnPosition, Quaternion.identity);
 
             // Instantiate the alien creature at the same position
-//            Instantiate(alienCreaturePrefab, spawnPosition, Quaternion.identity);
-            StartCoroutine(EnableAlienCreatureWithDelay());
+            Instantiate(alienCreaturePrefab, spawnPosition, Quaternion.identity);
+//            StartCoroutine(EnableAlienCreatureWithDelay());
 
             // Disable the water renderer if needed
             // waterRenderer.enabled = false;
@@ -43,13 +41,18 @@ public class SpawnAlienCreature : MonoBehaviour
             // Start a coroutine to disable the spawned objects after a delay
             //StartCoroutine(DisableSpawnedObjectsAfterDelay());
 
+            waterAnimator.enabled = false;
+            spyWaterCube.SetActive(false);
+            
+            waterCollider.isTrigger = true;
+
         }
     }
     private IEnumerator EnableAlienCreatureWithDelay()
     {
         Vector3 spawnPosition = transform.position;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         Instantiate(alienCreaturePrefab, spawnPosition, Quaternion.identity);
 
     }

@@ -3,42 +3,29 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class OrbManager : MonoBehaviour
+public class OrbParentManager : MonoBehaviour
 {
-
     public int goodOrbPoints = 10;
-
     public int negativeOrb1Points = -2;
-
     public int negativeOrb2Points = -5;
-
-    public float maxOrbCHangingTime;
+    public float maxOrbChangingTime;
 
     private int lastSelectedOrbType = 0; // 0: None, 1: Good Orb, 2: Negative Orb 1, 3: Negative Orb 2
-
+    private int consecutiveNegativeOrb2Count = 0; // Count of consecutive NegativeOrb2 selections
     public Transform[] childOrbs;
-
     private int currentActiveOrbIndex = 0;
 
     void OnEnable()
     {
-        // Find all child orbs.
-
         int childCount = transform.childCount;
-
         childOrbs = new Transform[childCount];
 
         for (int i = 0; i < childCount; i++)
         {
-            // Keep all the child orb in the array
             childOrbs[i] = transform.GetChild(i);
-
         }
 
-        // Enable the first orb initially.
-
         EnableCurrentOrb();
-
     }
 
     private void Start()
@@ -46,18 +33,14 @@ public class OrbManager : MonoBehaviour
         InvokeRepeating("SwitchOrbType", 0.1f, 0.2f);
     }
 
-
     public void SelectedOrbtype()
     {
         int currentOrbType = GetOrbType();
-        Debug.Log("Current Orb Type" + currentOrbType);
+        Debug.Log("Current Orb Type: " + currentOrbType);
 
         if (currentOrbType == lastSelectedOrbType)
         {
-
             HandleConsecutiveSelectionDilemma(currentOrbType);
-            
-
         }
         else
         {
@@ -65,41 +48,44 @@ public class OrbManager : MonoBehaviour
         }
 
         lastSelectedOrbType = currentOrbType;
-
-        //SwitchOrbType();
     }
+
     private void Update()
     {
         TestScore();
     }
+
     public void TestScore()
     {
-        if(Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
+            // Call the AddScore method on the current active orb
             GameManager.Instance.AddScore(goodOrbPoints);
-            Debug.Log("G ket is pressed");
+            Debug.Log("G key is pressed");
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            GameManager.Instance.AddScore(negativeOrb1Points);
         }
     }
 
     int GetOrbType()
     {
-        if (CompareTag("GoodOrb"))
+        // Get the orb type based on the tag of the current active orb
+        if (childOrbs[currentActiveOrbIndex].CompareTag("GoodOrb"))
         {
             Debug.Log("Caught Good Orb");
             return 1; // Good Orb
-
         }
-        else if (CompareTag("NegativeOrb1"))
+        else if (childOrbs[currentActiveOrbIndex].CompareTag("NegativeOrb1"))
         {
-            Debug.Log("Caught Negative Orb 01");
+            Debug.Log("Caught Negative Orb 1");
             return 2; // Negative Orb 1
-
         }
-        else if (CompareTag("NegativeOrb2"))
+        else if (childOrbs[currentActiveOrbIndex].CompareTag("NegativeOrb2"))
         {
-            Debug.Log("Caught Negative Orb 01");
+            Debug.Log("Caught Negative Orb 2");
             return 3; // Negative Orb 2
-
         }
 
         return 0; // Unknown
@@ -123,27 +109,32 @@ public class OrbManager : MonoBehaviour
 
     void HandleConsecutiveSelectionDilemma(int orbType)
     {
-        // Logic for consecutive selection dilemma.
-        // You can deduct additional points or reset the score here.
-        GameManager.Instance.ResetScore();
+        if (orbType == 3) // Check if the current orb is Negative Orb 2
+        {
+            consecutiveNegativeOrb2Count++;
+
+            if (consecutiveNegativeOrb2Count >= 2)
+            {
+                // Reset the entire score if NegativeOrb2 is selected two times simultaneously
+                GameManager.Instance.ResetScore();
+                consecutiveNegativeOrb2Count = 0; // Reset the count
+            }
+        }
+        else
+        {
+            // Reset the count if a different orb is selected
+            consecutiveNegativeOrb2Count = 0;
+        }
     }
 
     private void SwitchOrbType()
     {
-        //// Disable the current orb and enable the next one in the cycle.
-
-        //DisableCurrentOrb();
-
-        //MoveToNextOrb();
-
-        //EnableCurrentOrb();
-
         StartCoroutine(SwithTheOrbType());
     }
 
     public IEnumerator SwithTheOrbType()
     {
-        float waitingTime = maxOrbCHangingTime;
+        float waitingTime = maxOrbChangingTime;
         DisableCurrentOrb();
         yield return new WaitForSeconds(waitingTime);
         MoveToNextOrb();
@@ -152,6 +143,7 @@ public class OrbManager : MonoBehaviour
         yield return new WaitForSeconds(waitingTime);
         Debug.Log("Inside coroutine");
     }
+
     void EnableCurrentOrb()
     {
         childOrbs[currentActiveOrbIndex].gameObject.SetActive(true);
@@ -164,14 +156,11 @@ public class OrbManager : MonoBehaviour
 
     void MoveToNextOrb()
     {
-        // Move to the next orb in a cyclic manner.
-
         currentActiveOrbIndex = (currentActiveOrbIndex + 1) % childOrbs.Length;
     }
 
     public void DestroySelf()
     {
-        // Destroy the orb after the specified time.
         Destroy(gameObject);
     }
 }

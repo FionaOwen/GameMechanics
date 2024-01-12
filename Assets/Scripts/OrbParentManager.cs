@@ -15,6 +15,12 @@ public class OrbParentManager : MonoBehaviour
     public Transform[] childOrbs;
     private int currentActiveOrbIndex = 0;
 
+    public float attractionForce = 500f; // Adjust the force as needed.
+    public float orbDestroyTime = 1.0f;  // Time in seconds before the attracted orbs are destroyed.
+
+    public Transform vrHeadset; // Assuming the VR headset represents the hand position.
+
+
     void OnEnable()
     {
         int childCount = transform.childCount;
@@ -31,6 +37,7 @@ public class OrbParentManager : MonoBehaviour
     private void Start()
     {
         InvokeRepeating("SwitchOrbType", 0.1f, 0.2f);
+        vrHeadset = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     public void SelectedOrbtype()
@@ -50,24 +57,7 @@ public class OrbParentManager : MonoBehaviour
         lastSelectedOrbType = currentOrbType;
     }
 
-    private void Update()
-    {
-        TestScore();
-    }
 
-    public void TestScore()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            // Call the AddScore method on the current active orb
-            GameManager.Instance.AddScore(goodOrbPoints);
-            Debug.Log("G key is pressed");
-        }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            GameManager.Instance.AddScore(negativeOrb1Points);
-        }
-    }
 
     int GetOrbType()
     {
@@ -91,20 +81,59 @@ public class OrbParentManager : MonoBehaviour
         return 0; // Unknown
     }
 
+    //void HandleOrbSelection(int orbType)
+    //{
+    //    switch (orbType)
+    //    {
+    //        case 1: // Good Orb
+    //            GameManager.Instance.AddScore(goodOrbPoints);
+    //            break;
+    //        case 2: // Negative Orb 1
+    //            GameManager.Instance.AddScore(negativeOrb1Points);
+    //            break;
+    //        case 3: // Negative Orb 2
+    //            GameManager.Instance.AddScore(negativeOrb2Points);
+    //            break;
+    //    }
+    //}
+
     void HandleOrbSelection(int orbType)
     {
         switch (orbType)
         {
             case 1: // Good Orb
+                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(goodOrbPoints);
                 break;
             case 2: // Negative Orb 1
+                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(negativeOrb1Points);
                 break;
             case 3: // Negative Orb 2
+                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(negativeOrb2Points);
                 break;
         }
+    }
+
+    void AttractAndDestroyOrb(Transform orbTransform)
+    {
+        // Calculate the direction from the orb to the VR headset (simplified hand position).
+        Vector3 attractionDirection = vrHeadset.position - orbTransform.position;
+
+        // Apply a force to attract the orb towards the VR headset.
+        orbTransform.GetComponent<Rigidbody>().AddForce(attractionDirection.normalized * attractionForce);
+        Debug.Log("Rigidbody of " + orbTransform.name);
+
+        // Optionally, you can also rotate the orb to face the VR headset.
+        orbTransform.LookAt(vrHeadset.position);
+
+        // Attach a script to the orb to handle collision with the VR headset.
+        OrbCollisionHandler orbCollisionHandler = orbTransform.gameObject.AddComponent<OrbCollisionHandler>();
+        //orbCollisionHandler.SetOrbParentManager(this); // Pass a reference to the OrbParentManager.
+
+        // No need to destroy the orb here.
+        // Destroy(orbTransform.gameObject, orbDestroyTime);
     }
 
     void HandleConsecutiveSelectionDilemma(int orbType)

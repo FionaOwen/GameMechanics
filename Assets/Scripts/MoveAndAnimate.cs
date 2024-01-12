@@ -55,4 +55,8 @@ public class MoveAndAnimate : MonoBehaviour
             transform.LookAt(target);
         }
     }
+    public void KillScoreForUser()
+    {
+        GameManager.Instance.AddScore(creatureKillScore);
+    }
 }

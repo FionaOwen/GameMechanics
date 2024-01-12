@@ -8,6 +8,12 @@ public class Timer : MonoBehaviour
     public OrbSpawner orbSpawnerObject;
     public GameObject[] objectsToActivateOnEnd;
     public GameObject[] objectsToDeactivateOnEnd;
+    public bool isGameRunning;
+
+    private void Start()
+    {
+        isGameRunning = true;
+    }
 
     private void Update()
     {
@@ -16,6 +22,8 @@ public class Timer : MonoBehaviour
         if (gameTime <= 0)
         {
             EndGame();
+            isGameRunning = false;
+            orbSpawnerObject.gameRunningSatus = isGameRunning;
         }
     }
 

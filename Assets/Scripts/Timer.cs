@@ -5,6 +5,7 @@ public class Timer : MonoBehaviour
 {
     public float gameTime = 180f; // 3 minutes
     public TextMeshProUGUI timeTextMeshPro;
+    public OrbSpawner orbSpawnerObject;
     public GameObject[] objectsToActivateOnEnd;
     public GameObject[] objectsToDeactivateOnEnd;
 
@@ -23,8 +24,8 @@ public class Timer : MonoBehaviour
         // Implement the logic for ending the game.
         // You may display the player's final score, show a game-over screen, etc.
         gameTime = 0;
-        objectsToActivateOnEnd[0].SetActive(false);
-
-
+        objectsToActivateOnEnd[0].SetActive(true);
+        objectsToDeactivateOnEnd[0].SetActive(false);
+        orbSpawnerObject.enabled = false;
     }
 }

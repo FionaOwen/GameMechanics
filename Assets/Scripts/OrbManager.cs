@@ -12,11 +12,7 @@ public class OrbManager : MonoBehaviour
 
     public int negativeOrb2Points = -5;
 
-    //[System.Serializable]
-
-    //public class OrbGrabEvent : UnityEvent<int> { }
-
-    //public OrbGrabEvent onOrbGrabbed;
+    public float maxOrbCHangingTime;
 
     private int lastSelectedOrbType = 0; // 0: None, 1: Good Orb, 2: Negative Orb 1, 3: Negative Orb 2
 
@@ -47,18 +43,20 @@ public class OrbManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SwitchOrbType", 0.1f, 0.5f);
+        InvokeRepeating("SwitchOrbType", 0.1f, 0.2f);
     }
 
 
     public void SelectedOrbtype()
     {
         int currentOrbType = GetOrbType();
+        Debug.Log("Current Orb Type" + currentOrbType);
 
         if (currentOrbType == lastSelectedOrbType)
         {
 
             HandleConsecutiveSelectionDilemma(currentOrbType);
+            
 
         }
         else
@@ -70,13 +68,24 @@ public class OrbManager : MonoBehaviour
 
         //SwitchOrbType();
     }
-
+    private void Update()
+    {
+        TestScore();
+    }
+    public void TestScore()
+    {
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            GameManager.Instance.AddScore(goodOrbPoints);
+            Debug.Log("G ket is pressed");
+        }
+    }
 
     int GetOrbType()
     {
         if (CompareTag("GoodOrb"))
         {
-            Debug.Log("Caught Negative Good Orb");
+            Debug.Log("Caught Good Orb");
             return 1; // Good Orb
 
         }
@@ -134,7 +143,7 @@ public class OrbManager : MonoBehaviour
 
     public IEnumerator SwithTheOrbType()
     {
-        float waitingTime = UnityEngine.Random.Range(0f, 0.1f);
+        float waitingTime = maxOrbCHangingTime;
         DisableCurrentOrb();
         yield return new WaitForSeconds(waitingTime);
         MoveToNextOrb();

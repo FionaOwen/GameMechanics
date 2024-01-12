@@ -15,6 +15,8 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
 
     public GameObject spaceshipFrontMirror;
     public GameObject spaceShipLadder;
+    public GameObject spaceShipFrontBlockade;
+    public GameObject startUI;
 
     public Transform spaceshipTransform; // Reference to the spaceship's transform.
 
@@ -24,7 +26,8 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
     void Start()
     {
         //spaceshipTransform = transform.Find("Spaceship"); // Adjust the name accordingly.
-
+        spaceShipLadder.SetActive(false);
+        startUI.SetActive(false);
         // Start the sequence.
         StartCoroutine(StartSpaceshipSequence());
     }
@@ -45,6 +48,7 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
     {
         if (currentWaypointIndex < takeoffWaypoints.Length && !inWaitPhase)
         {
+            spaceShipLadder?.SetActive(false);
             MoveSpaceship(takeoffWaypoints);
         }
         else if (currentWaypointIndex < traversalWaypoints.Length)
@@ -55,6 +59,9 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
         {
             // Spaceship has completed its journey.
             spaceshipFrontMirror.SetActive(false);
+            spaceShipFrontBlockade.SetActive(false);
+            spaceShipLadder.SetActive(true);
+            startUI.SetActive(true);
             Debug.Log("Spaceship has completed its journey!");
         }
 

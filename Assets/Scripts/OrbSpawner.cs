@@ -9,15 +9,22 @@ public class OrbSpawner : MonoBehaviour
     public int maxOrbsPerSpawn;   // Maximum number of orbs to spawn in a single convergence event.
 
     private int orbsSpawned = 0;
+    [SerializeField] private Timer gameTimer;
+    public bool gameRunningSatus;
 
     void Start()
     {
         InvokeRepeating("SpawnOrbs", 0.1f, spawnInterval);
     }
 
+    private void Update()
+    {
+        gameRunningSatus = gameTimer.isGameRunning;
+    }
+
     void SpawnOrbs()
     {
-        if (orbsSpawned < maxOrbsPerSpawn)
+        if (orbsSpawned < maxOrbsPerSpawn && gameRunningSatus == true)
         {
             // Randomly select an orb prefab from the array.
             GameObject randomOrbPrefab = orbPrefabs[Random.Range(0, orbPrefabs.Length)];
@@ -39,6 +46,10 @@ public class OrbSpawner : MonoBehaviour
 
                 orbsSpawned++;
             }
+        }
+        else
+        {
+
         }
     }
 

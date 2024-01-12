@@ -22,12 +22,15 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
 
     private int currentWaypointIndex = 0; // Index of the current waypoint.
     private bool inWaitPhase = false; // Flag indicating whether the spaceship is in the wait phase.
+    public GameObject startedTheGameButton;
 
     void Start()
     {
+        
         //spaceshipTransform = transform.Find("Spaceship"); // Adjust the name accordingly.
         spaceShipLadder.SetActive(false);
-        startUI.SetActive(false);
+        //startUI.SetActive(false);
+        startedTheGameButton.SetActive(false);
         // Start the sequence.
         StartCoroutine(StartSpaceshipSequence());
     }
@@ -59,9 +62,9 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
         {
             // Spaceship has completed its journey.
             spaceshipFrontMirror.SetActive(false);
-            spaceShipFrontBlockade.SetActive(false);
+            //spaceShipFrontBlockade.SetActive(false);
             spaceShipLadder.SetActive(true);
-            startUI.SetActive(true);
+            startedTheGameButton?.SetActive(true);
             Debug.Log("Spaceship has completed its journey!");
         }
 

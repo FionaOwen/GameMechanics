@@ -14,7 +14,7 @@ public class OrbParentManager : MonoBehaviour
     private int consecutiveNegativeOrb2Count = 0; // Count of consecutive NegativeOrb2 selections
     public Transform[] childOrbs;
     private int currentActiveOrbIndex = 0;
-
+    public int resetOrbArrayPlace;
     public float attractionForce = 500f; // Adjust the force as needed.
     public float orbDestroyTime = 1.0f;  // Time in seconds before the attracted orbs are destroyed.
 
@@ -36,7 +36,7 @@ public class OrbParentManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SwitchOrbType", 0.1f, 0.2f);
+        //InvokeRepeating("SwitchOrbType", 0.1f, 0.2f);
         vrHeadset = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -81,40 +81,40 @@ public class OrbParentManager : MonoBehaviour
         return 0; // Unknown
     }
 
-    //void HandleOrbSelection(int orbType)
-    //{
-    //    switch (orbType)
-    //    {
-    //        case 1: // Good Orb
-    //            GameManager.Instance.AddScore(goodOrbPoints);
-    //            break;
-    //        case 2: // Negative Orb 1
-    //            GameManager.Instance.AddScore(negativeOrb1Points);
-    //            break;
-    //        case 3: // Negative Orb 2
-    //            GameManager.Instance.AddScore(negativeOrb2Points);
-    //            break;
-    //    }
-    //}
-
     void HandleOrbSelection(int orbType)
     {
         switch (orbType)
         {
             case 1: // Good Orb
-                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(goodOrbPoints);
                 break;
             case 2: // Negative Orb 1
-                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(negativeOrb1Points);
                 break;
             case 3: // Negative Orb 2
-                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(negativeOrb2Points);
                 break;
         }
     }
+
+    //void HandleOrbSelection(int orbType)
+    //{
+    //    switch (orbType)
+    //    {
+    //        case 1: // Good Orb
+    //            AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
+    //            GameManager.Instance.AddScore(goodOrbPoints);
+    //            break;
+    //        case 2: // Negative Orb 1
+    //            AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
+    //            GameManager.Instance.AddScore(negativeOrb1Points);
+    //            break;
+    //        case 3: // Negative Orb 2
+    //            AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
+    //            GameManager.Instance.AddScore(negativeOrb2Points);
+    //            break;
+    //    }
+    //}
 
     void AttractAndDestroyOrb(Transform orbTransform)
     {

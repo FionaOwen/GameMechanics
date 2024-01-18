@@ -17,6 +17,7 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
     public GameObject spaceShipLadder;
     public GameObject spaceShipFrontBlockade;
     public GameObject startUI;
+    public GameObject ambientAudioSource1;
 
     public Transform spaceshipTransform; // Reference to the spaceship's transform.
 
@@ -61,9 +62,10 @@ public class SpaceshipFlightLandingandTakeoff : MonoBehaviour
         else
         {
             // Spaceship has completed its journey.
-            spaceshipFrontMirror.SetActive(false);
+            ambientAudioSource1?.SetActive(false);
+            //spaceshipFrontMirror.SetActive(false);
             //spaceShipFrontBlockade.SetActive(false);
-            spaceShipLadder.SetActive(true);
+            //spaceShipLadder.SetActive(true);
             startedTheGameButton?.SetActive(true);
             Debug.Log("Spaceship has completed its journey!");
         }

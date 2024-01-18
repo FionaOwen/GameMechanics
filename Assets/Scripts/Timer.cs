@@ -26,16 +26,19 @@ public class Timer : MonoBehaviour
             isGameRunning = false;
             orbSpawnerObject.gameRunningSatus = isGameRunning;
         }
+        if (orbSpawnerObject.gameRunningSatus)
+            finalScoreTextMeshPro.text = GameManager.Instance.playerScoreTextMeshPro.text;
     }
 
     private void EndGame()
     {
         // Implement the logic for ending the game.
         // You may display the player's final score, show a game-over screen, etc.
+        
+
         gameTime = 0;
-        finalScoreTextMeshPro.text = GameManager.Instance.playerScoreTextMeshPro.text; 
         objectsToActivateOnEnd[0].SetActive(true);
-        objectsToDeactivateOnEnd[0].SetActive(false);
+        Destroy(objectsToDeactivateOnEnd[0]);
         objectsToDeactivateOnEnd[1].SetActive(false);
         orbSpawnerObject.enabled = false;
     }

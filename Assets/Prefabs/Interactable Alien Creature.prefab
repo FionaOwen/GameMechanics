@@ -769,7 +769,7 @@ MonoBehaviour:
   movementSpeed: 5
   stoppingDistance: 2
   creatureKillScore: 1
-  creatureAttackScore: -2
+  creatureAttackScore: -5
   animator: {fileID: 5655595040050304127}
 --- !u!1 &4216655986795667049
 GameObject:

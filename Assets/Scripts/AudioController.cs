@@ -28,6 +28,7 @@ public class AudioController : MonoBehaviour
         currentClipIndex = 0;
 
         isMuted = false;
+        //audioSource.Play();
 
         // Set the initial audio clip
 
@@ -43,17 +44,14 @@ public class AudioController : MonoBehaviour
 
     public void AudioTransition()
     {
-        // Play the current audio clip
-
-        audioSource.Play();
-
-        // Move to the next audio clip in the list
-
+        // Increment the index or wrap around to the beginning
         currentClipIndex = (currentClipIndex + 1) % audioClips.Length;
 
-        // Set the next audio clip
-
+        // Set the current audio clip
         audioSource.clip = audioClips[currentClipIndex];
+
+        // Play the updated audio clip
+        audioSource.Play();
     }
 
     public void ToggleMute()

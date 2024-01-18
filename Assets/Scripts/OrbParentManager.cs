@@ -5,16 +5,16 @@ using System;
 
 public class OrbParentManager : MonoBehaviour
 {
-    public int goodOrbPoints = 10;
-    public int negativeOrb1Points = -2;
-    public int negativeOrb2Points = -5;
+    public int goodOrbPoints;
+    public int negativeOrb1Points;
+    public int negativeOrb2Points;
     public float maxOrbChangingTime;
 
     private int lastSelectedOrbType = 0; // 0: None, 1: Good Orb, 2: Negative Orb 1, 3: Negative Orb 2
     private int consecutiveNegativeOrb2Count = 0; // Count of consecutive NegativeOrb2 selections
     public Transform[] childOrbs;
     private int currentActiveOrbIndex = 0;
-
+    public int resetOrbArrayPlace;
     public float attractionForce = 500f; // Adjust the force as needed.
     public float orbDestroyTime = 1.0f;  // Time in seconds before the attracted orbs are destroyed.
 
@@ -36,7 +36,7 @@ public class OrbParentManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SwitchOrbType", 0.1f, 0.2f);
+        //InvokeRepeating("SwitchOrbType", 0.1f, 0.2f);
         vrHeadset = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -45,14 +45,16 @@ public class OrbParentManager : MonoBehaviour
         int currentOrbType = GetOrbType();
         Debug.Log("Current Orb Type: " + currentOrbType);
 
-        if (currentOrbType == lastSelectedOrbType)
-        {
-            HandleConsecutiveSelectionDilemma(currentOrbType);
-        }
-        else
-        {
-            HandleOrbSelection(currentOrbType);
-        }
+        //if (currentOrbType == lastSelectedOrbType)
+        //{
+        //    //HandleConsecutiveSelectionDilemma(currentOrbType);
+        //}
+        //else
+        //{
+        //    HandleOrbSelection(currentOrbType);
+        //}
+        
+        HandleOrbSelection(currentOrbType);
 
         lastSelectedOrbType = currentOrbType;
     }
@@ -81,97 +83,97 @@ public class OrbParentManager : MonoBehaviour
         return 0; // Unknown
     }
 
-    //void HandleOrbSelection(int orbType)
-    //{
-    //    switch (orbType)
-    //    {
-    //        case 1: // Good Orb
-    //            GameManager.Instance.AddScore(goodOrbPoints);
-    //            break;
-    //        case 2: // Negative Orb 1
-    //            GameManager.Instance.AddScore(negativeOrb1Points);
-    //            break;
-    //        case 3: // Negative Orb 2
-    //            GameManager.Instance.AddScore(negativeOrb2Points);
-    //            break;
-    //    }
-    //}
-
     void HandleOrbSelection(int orbType)
     {
         switch (orbType)
         {
             case 1: // Good Orb
-                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(goodOrbPoints);
                 break;
             case 2: // Negative Orb 1
-                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(negativeOrb1Points);
                 break;
             case 3: // Negative Orb 2
-                AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
                 GameManager.Instance.AddScore(negativeOrb2Points);
                 break;
         }
     }
 
-    void AttractAndDestroyOrb(Transform orbTransform)
-    {
-        // Calculate the direction from the orb to the VR headset (simplified hand position).
-        Vector3 attractionDirection = vrHeadset.position - orbTransform.position;
+    //void HandleOrbSelection(int orbType)
+    //{
+    //    switch (orbType)
+    //    {
+    //        case 1: // Good Orb
+    //            AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
+    //            GameManager.Instance.AddScore(goodOrbPoints);
+    //            break;
+    //        case 2: // Negative Orb 1
+    //            AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
+    //            GameManager.Instance.AddScore(negativeOrb1Points);
+    //            break;
+    //        case 3: // Negative Orb 2
+    //            AttractAndDestroyOrb(childOrbs[currentActiveOrbIndex]);
+    //            GameManager.Instance.AddScore(negativeOrb2Points);
+    //            break;
+    //    }
+    //}
 
-        // Apply a force to attract the orb towards the VR headset.
-        orbTransform.GetComponent<Rigidbody>().AddForce(attractionDirection.normalized * attractionForce);
-        Debug.Log("Rigidbody of " + orbTransform.name);
+    //void AttractAndDestroyOrb(Transform orbTransform)
+    //{
+    //    // Calculate the direction from the orb to the VR headset (simplified hand position).
+    //    Vector3 attractionDirection = vrHeadset.position - orbTransform.position;
 
-        // Optionally, you can also rotate the orb to face the VR headset.
-        orbTransform.LookAt(vrHeadset.position);
+    //    // Apply a force to attract the orb towards the VR headset.
+    //    orbTransform.GetComponent<Rigidbody>().AddForce(attractionDirection.normalized * attractionForce);
+    //    Debug.Log("Rigidbody of " + orbTransform.name);
 
-        // Attach a script to the orb to handle collision with the VR headset.
-        OrbCollisionHandler orbCollisionHandler = orbTransform.gameObject.AddComponent<OrbCollisionHandler>();
-        //orbCollisionHandler.SetOrbParentManager(this); // Pass a reference to the OrbParentManager.
+    //    // Optionally, you can also rotate the orb to face the VR headset.
+    //    orbTransform.LookAt(vrHeadset.position);
 
-        // No need to destroy the orb here.
-        // Destroy(orbTransform.gameObject, orbDestroyTime);
-    }
+    //    // Attach a script to the orb to handle collision with the VR headset.
+    //    OrbCollisionHandler orbCollisionHandler = orbTransform.gameObject.AddComponent<OrbCollisionHandler>();
+    //    //orbCollisionHandler.SetOrbParentManager(this); // Pass a reference to the OrbParentManager.
 
-    void HandleConsecutiveSelectionDilemma(int orbType)
-    {
-        if (orbType == 3) // Check if the current orb is Negative Orb 2
-        {
-            consecutiveNegativeOrb2Count++;
+    //    // No need to destroy the orb here.
+    //    // Destroy(orbTransform.gameObject, orbDestroyTime);
+    //}
 
-            if (consecutiveNegativeOrb2Count >= 2)
-            {
-                // Reset the entire score if NegativeOrb2 is selected two times simultaneously
-                GameManager.Instance.ResetScore();
-                consecutiveNegativeOrb2Count = 0; // Reset the count
-            }
-        }
-        else
-        {
-            // Reset the count if a different orb is selected
-            consecutiveNegativeOrb2Count = 0;
-        }
-    }
+    //void HandleConsecutiveSelectionDilemma(int orbType)
+    //{
+    //    if (orbType == 3) // Check if the current orb is Negative Orb 2
+    //    {
+    //        consecutiveNegativeOrb2Count++;
 
-    private void SwitchOrbType()
-    {
-        StartCoroutine(SwithTheOrbType());
-    }
+    //        if (consecutiveNegativeOrb2Count >= 2)
+    //        {
+    //            // Reset the entire score if NegativeOrb2 is selected two times simultaneously
+    //            GameManager.Instance.ResetScore();
+    //            consecutiveNegativeOrb2Count = 0; // Reset the count
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // Reset the count if a different orb is selected
+    //        consecutiveNegativeOrb2Count = 0;
+    //    }
+    //}
 
-    public IEnumerator SwithTheOrbType()
-    {
-        float waitingTime = maxOrbChangingTime;
-        DisableCurrentOrb();
-        yield return new WaitForSeconds(waitingTime);
-        MoveToNextOrb();
-        yield return new WaitForSeconds(waitingTime);
-        EnableCurrentOrb();
-        yield return new WaitForSeconds(waitingTime);
-        Debug.Log("Inside coroutine");
-    }
+    //private void SwitchOrbType()
+    //{
+    //    StartCoroutine(SwithTheOrbType());
+    //}
+
+    //public IEnumerator SwithTheOrbType()
+    //{
+    //    float waitingTime = maxOrbChangingTime;
+    //    DisableCurrentOrb();
+    //    yield return new WaitForSeconds(waitingTime);
+    //    MoveToNextOrb();
+    //    yield return new WaitForSeconds(waitingTime);
+    //    EnableCurrentOrb();
+    //    yield return new WaitForSeconds(waitingTime);
+    //    Debug.Log("Inside coroutine");
+    //}
 
     void EnableCurrentOrb()
     {

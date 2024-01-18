@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public AudioSource audioSource;
+    public float delayInSeconds;
+    private void Start()
     {
-        
+
+        Invoke("PlayDelayedAudio", delayInSeconds);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void PlayDelayedAudio()
     {
-        
+        // Play the updated audio clip
+        audioSource.Play();
     }
 }
+

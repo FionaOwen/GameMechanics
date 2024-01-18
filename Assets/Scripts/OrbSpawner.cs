@@ -12,9 +12,12 @@ public class OrbSpawner : MonoBehaviour
     [SerializeField] private Timer gameTimer;
     public bool gameRunningSatus;
 
+    public AudioSource playBacgroundAudioSource;
+
     void Start()
     {
         InvokeRepeating("SpawnOrbs", 0.1f, spawnInterval);
+        playBacgroundAudioSource.Play();
     }
 
     private void Update()

@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         playerScore += score;
         playerScoreTextMeshPro.text = playerScore.ToString();
         Debug.Log("Player SCORE IS: " + playerScore);
+        
     }
 
     public void ResetScore()
@@ -51,5 +52,10 @@ public class GameManager : MonoBehaviour
         playerScore = 0;
         playerScoreTextMeshPro.text = playerScore.ToString();
         Debug.Log("PlayerScore Zeeerooooo!!!!!");
+    }
+
+    public void QuitTheApplication()
+    {
+        Application.Quit();
     }
 }

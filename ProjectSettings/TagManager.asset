@@ -12,6 +12,7 @@ TagManager:
   - SpaceAircraft
   - AlienCreature
   - WaterSplash
+  - Controller
   layers:
   - Default
   - TransparentFX

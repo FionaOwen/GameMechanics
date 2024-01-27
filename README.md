@@ -33,10 +33,12 @@ The game ends with a display of your score that reflects your choices.
 #### Spacecraft
 <img src="https://github.com/FionaOwen/Pictures/blob/main/GameMechanics04.png" width="1100" height="" />
 <p align="justify">
-  
+The spacecraft serves as a spawn point and a strategic staging area, designed to offer an engaging introduction to the game.  Here, the user can familiarise themselves with the setting, premise, instructions, scoring system, and challenges. It allows players to plan their approach before gameplay begins. Complementing the audio guidance, a user interface (UI) highlights the key points, ensuring a comprehensive understanding and an immersive experience.
+ 
 #### Space Station M331
 <img src="https://github.com/FionaOwen/Pictures/blob/main/GameMechanics03.png" width="1100" height="" />
 <p align="justify">
+The Space Station M331 is an area that serves a dual purpose in the storyline: it acts as a landing zone for the spacecraft and provides an open area for gameplay. Here, users experience the orb shower and engage in the challenge of catching specific orbs, combining narrative elements with interactive play.
 
 #### Bouncing Orbs with Gravity Gun Interaction
 <img src="https://github.com/FionaOwen/Pictures/blob/main/GameMechanics01.png" width="1100" height="" />
